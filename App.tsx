@@ -47,25 +47,26 @@ const App: React.FC = () => {
       <main className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
         
         {/* DASHBOARD GRID */}
-        <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 h-[calc(100vh-120px)] min-h-[800px]">
+        {/* Removed fixed height so widgets can expand naturally */}
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
             
             {/* COLUMN 1: Main Data Grid - Takes 8/12 width on large screens */}
-            <div className="xl:col-span-8 flex flex-col gap-6 h-full">
-                <div className="flex-1 min-h-[500px]">
+            <div className="xl:col-span-8 flex flex-col gap-6">
+                <div className="min-h-[500px]">
                     <EmitterOverview />
                 </div>
                 {/* House Specs / Heat Demand Table */}
-                <div className="h-[400px]">
+                <div>
                     <HeatDemandTable />
                 </div>
             </div>
 
             {/* COLUMN 2: Sidebar Stats & AI - Takes 4/12 width */}
-            <div className="xl:col-span-4 flex flex-col gap-6 h-full">
-                <div className="h-[45%]">
+            <div className="xl:col-span-4 flex flex-col gap-6">
+                <div className="min-h-[400px]">
                     <PowerAnalysis />
                 </div>
-                <div className="h-[55%]">
+                <div className="min-h-[500px]">
                     <AiAdvisor />
                 </div>
             </div>

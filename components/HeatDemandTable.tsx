@@ -4,17 +4,17 @@ import { calculateHousePowerDemand } from '../utils/heatingPhysics';
 import { Flame, Info, TrendingUp } from 'lucide-react';
 
 export const HeatDemandTable: React.FC = () => {
-  // Generate temperature steps: 10, 5, 0, -5 ... -30
+  // Generate temperature steps: 10, 5, 0, -5 ... -35
   const steps = [];
-  for (let t = 10; t >= -30; t -= 5) {
+  for (let t = 10; t >= -35; t -= 5) {
     steps.push(t);
   }
 
-  // Calculate max demand for bar chart scaling (at -30)
-  const maxDemand = calculateHousePowerDemand(-30);
+  // Calculate max demand for bar chart scaling (at -35)
+  const maxDemand = calculateHousePowerDemand(-35);
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-slate-200 flex flex-col h-full overflow-hidden">
+    <div className="bg-white rounded-xl shadow-sm border border-slate-200 flex flex-col">
       <div className="p-5 border-b border-slate-100 flex justify-between items-center bg-white">
         <h2 className="text-base font-semibold text-slate-800 flex items-center gap-2">
           <Flame className="w-4 h-4 text-orange-500" />
@@ -28,7 +28,7 @@ export const HeatDemandTable: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex-1 overflow-auto bg-slate-50 p-0">
+      <div className="bg-slate-50 p-0">
         <table className="w-full text-sm text-left">
             <thead className="text-xs text-slate-500 uppercase bg-slate-100 font-medium sticky top-0 shadow-sm z-10">
                 <tr>
