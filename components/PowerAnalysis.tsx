@@ -1,14 +1,18 @@
 
 import React from 'react';
 import { MY_SYSTEM } from '../constants';
-import { calculateActualPower, calculateEfficiencyPercent, calculateFloorHeatingPower } from '../utils/heatingPhysics';
-import { Activity, Zap, TrendingDown } from 'lucide-react';
+import { calculateActualPower, calculateEfficiencyPercent, calculateFloorHeatingPower, calculateHousePowerDemand } from '../utils/heatingPhysics';
+import { Activity, Zap, TrendingDown, AlertTriangle } from 'lucide-react';
 import { EmitterType } from '../types';
 
-export const PowerAnalysis: React.FC = () => {
+interface PowerAnalysisProps {
+  outdoorTemp: number;
+}
+
+export const PowerAnalysis: React.FC<PowerAnalysisProps> = ({ outdoorTemp }) => {
   const roomTemp = 20;
 
-  // Calculate totals
+  // Calculate totals from Emitters
   let totalRatedPower = 0;
   let totalActualRadiatorPower = 0;
   let totalActualFloorPower = 0;
@@ -25,6 +29,12 @@ export const PowerAnalysis: React.FC = () => {
   });
 
   const totalActualPower = totalActualRadiatorPower + totalActualFloorPower;
+  
+  // Calculate House Demand based on Slider Temp
+  const requiredPower = calculateHousePowerDemand(outdoorTemp);
+  const coveragePercent = requiredPower > 0 ? Math.round((totalActualPower / requiredPower) * 100) : 100;
+  const deficit = Math.max(0, requiredPower - totalActualPower);
+  
   // Efficiency is based on how well radiators perform vs their rating
   const efficiency = calculateEfficiencyPercent(totalRatedPower, totalActualRadiatorPower);
 
@@ -90,16 +100,45 @@ export const PowerAnalysis: React.FC = () => {
       </div>
 
       {/* Main KPI */}
-      <div className="bg-slate-900 rounded-lg p-4 text-white mb-4 relative overflow-hidden">
+      <div className="bg-slate-900 rounded-lg p-4 text-white mb-4 relative overflow-hidden transition-all duration-300">
         <div className="relative z-10">
-            <p className="text-slate-400 text-xs font-medium uppercase tracking-wider mb-1">Beräknad Total Effekt</p>
-            <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-bold font-mono text-amber-400">{totalActualPower}W</span>
+            <div className="flex justify-between items-start mb-2">
+                <div>
+                    <p className="text-slate-400 text-xs font-medium uppercase tracking-wider mb-1">Avgiven Effekt</p>
+                    <span className="text-3xl font-bold font-mono text-amber-400">{totalActualPower}W</span>
+                </div>
+                <div className="text-right">
+                    <p className="text-slate-400 text-xs font-medium uppercase tracking-wider mb-1">Behov ({outdoorTemp}°C)</p>
+                    <span className="text-xl font-bold font-mono text-slate-200">{requiredPower}W</span>
+                </div>
             </div>
-             <div className="flex items-center gap-2 mt-1">
-                 <span className="text-[10px] text-slate-500 font-medium">Varav Radiatorer:</span>
+
+            {/* Coverage Bar */}
+            <div className="mt-2 mb-2">
+                <div className="flex justify-between text-[10px] text-slate-400 mb-1">
+                    <span>Täckningsgrad</span>
+                    <span className={coveragePercent < 100 ? "text-red-400" : "text-green-400"}>{coveragePercent}%</span>
+                </div>
+                <div className="w-full bg-slate-700 rounded-full h-2 overflow-hidden">
+                    <div 
+                        className={`h-full rounded-full transition-all duration-500 ${coveragePercent < 90 ? 'bg-red-500' : 'bg-green-500'}`}
+                        style={{ width: `${Math.min(100, coveragePercent)}%` }}
+                    ></div>
+                </div>
+            </div>
+
+            {deficit > 0 && (
+                <div className="flex items-center gap-2 text-xs text-red-300 bg-red-950/30 px-2 py-1.5 rounded mt-2 border border-red-900/50 animate-pulse">
+                    <AlertTriangle className="w-3 h-3 text-red-400" />
+                    <span>Underskott: <strong>{deficit}W</strong> (Radiatorerna begränsar)</span>
+                </div>
+            )}
+            
+             <div className="flex items-center gap-2 mt-3 pt-3 border-t border-slate-700">
+                 <span className="text-[10px] text-slate-500 font-medium">Element/Konvektor:</span>
                  <span className="text-xs text-slate-300 font-mono">{totalActualRadiatorPower}W</span>
-                 <span className="text-[10px] text-slate-500 font-medium ml-2">Varav Golvvärme:</span>
+                 <span className="text-slate-600">|</span>
+                 <span className="text-[10px] text-slate-500 font-medium">Golvvärme:</span>
                  <span className="text-xs text-slate-300 font-mono">{totalActualFloorPower}W</span>
             </div>
             

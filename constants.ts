@@ -154,16 +154,16 @@ export const MY_SYSTEM: HeatingSystem = {
 };
 
 export const MOCK_WEATHER: WeatherData = {
-  temp: -12,
-  condition: 'Snöfall',
-  wind: 8
+  temp: -25,
+  condition: 'Klart',
+  wind: 2
 };
 
 export const MOCK_CURVE_DATA: SimulationData[] = [
-  { time: '00:00', flowTemp: 42, returnTemp: 35, outdoorTemp: -12, calculatedSetPoint: 43 },
-  { time: '04:00', flowTemp: 41, returnTemp: 34, outdoorTemp: -13, calculatedSetPoint: 42 },
-  { time: '08:00', flowTemp: 44, returnTemp: 37, outdoorTemp: -10, calculatedSetPoint: 45 },
-  { time: '12:00', flowTemp: 40, returnTemp: 33, outdoorTemp: -8, calculatedSetPoint: 40 },
-  { time: '16:00', flowTemp: 43, returnTemp: 36, outdoorTemp: -9, calculatedSetPoint: 44 },
-  { time: '20:00', flowTemp: 45, returnTemp: 38, outdoorTemp: -11, calculatedSetPoint: 46 },
+  { time: '00:00', flowTemp: 48, returnTemp: 40, outdoorTemp: -24, calculatedSetPoint: 49 },
+  { time: '04:00', flowTemp: 47, returnTemp: 39, outdoorTemp: -25, calculatedSetPoint: 49 },
+  { time: '08:00', flowTemp: 49, returnTemp: 41, outdoorTemp: -25, calculatedSetPoint: 50 },
+  { time: '12:00', flowTemp: 46, returnTemp: 38, outdoorTemp: -22, calculatedSetPoint: 47 },
+  { time: '16:00', flowTemp: 48, returnTemp: 40, outdoorTemp: -23, calculatedSetPoint: 48 },
+  { time: '20:00', flowTemp: 49, returnTemp: 41, outdoorTemp: -25, calculatedSetPoint: 50 },
 ];

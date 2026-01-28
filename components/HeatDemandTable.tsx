@@ -3,7 +3,11 @@ import React from 'react';
 import { calculateHousePowerDemand } from '../utils/heatingPhysics';
 import { Flame, Info, TrendingUp } from 'lucide-react';
 
-export const HeatDemandTable: React.FC = () => {
+interface HeatDemandTableProps {
+  currentTemp?: number;
+}
+
+export const HeatDemandTable: React.FC<HeatDemandTableProps> = ({ currentTemp = -25 }) => {
   // Generate temperature steps: 10, 5, 0, -5 ... -35
   const steps = [];
   for (let t = 10; t >= -35; t -= 5) {
@@ -43,24 +47,35 @@ export const HeatDemandTable: React.FC = () => {
                     const demandKW = (demandW / 1000).toFixed(1);
                     const percentage = Math.min(100, (demandW / maxDemand) * 100);
                     
+                    // Check if this row is close to the slider temp
+                    const isCurrent = Math.abs(temp - currentTemp) < 2.5;
+
                     // Style logic
                     let rowBg = 'bg-white';
                     let loadColor = 'bg-green-500';
+                    let textColor = 'text-slate-600';
+                    
                     if (temp <= -10) { loadColor = 'bg-amber-500'; }
                     if (temp <= -20) { loadColor = 'bg-red-500'; rowBg = 'bg-red-50/30'; }
 
+                    // Override background if active
+                    if (isCurrent) {
+                        rowBg = 'bg-indigo-600 text-white';
+                        textColor = 'text-white';
+                    }
+
                     return (
-                        <tr key={temp} className={`${rowBg} hover:bg-indigo-50/50 transition-colors`}>
-                            <td className="px-5 py-3 font-mono font-medium text-slate-600">
+                        <tr key={temp} className={`${rowBg} ${!isCurrent && 'hover:bg-indigo-50/50'} transition-colors duration-200`}>
+                            <td className={`px-5 py-3 font-mono font-medium ${textColor}`}>
                                 {temp > 0 ? `+${temp}` : temp}°C
                             </td>
-                            <td className="px-5 py-3 font-bold text-slate-800">
-                                {demandKW} <span className="text-xs font-normal text-slate-500">kW</span>
+                            <td className={`px-5 py-3 font-bold ${isCurrent ? 'text-white' : 'text-slate-800'}`}>
+                                {demandKW} <span className={`text-xs font-normal ${isCurrent ? 'text-indigo-200' : 'text-slate-500'}`}>kW</span>
                             </td>
                             <td className="px-5 py-3 align-middle">
-                                <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
+                                <div className={`w-full h-2 rounded-full overflow-hidden ${isCurrent ? 'bg-indigo-800' : 'bg-slate-200'}`}>
                                     <div 
-                                        className={`h-full rounded-full ${loadColor}`} 
+                                        className={`h-full rounded-full ${isCurrent ? 'bg-white' : loadColor}`} 
                                         style={{ width: `${percentage}%` }}
                                     ></div>
                                 </div>
