@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { EmitterOverview } from './components/EmitterOverview';
 import { PowerAnalysis } from './components/PowerAnalysis';
-import { AiAdvisor } from './components/AiAdvisor';
 import { HeatDemandTable } from './components/HeatDemandTable';
 import { Wind, CloudSnow, Home as HomeIcon, Settings2 } from 'lucide-react';
 import { MOCK_WEATHER } from './constants';
@@ -124,7 +123,7 @@ const App: React.FC = () => {
                 </div>
             </div>
 
-            {/* COLUMN 2: Sidebar Stats & AI - Takes 4/12 width */}
+            {/* COLUMN 2: Sidebar Stats - Takes 4/12 width */}
             <div className="xl:col-span-4 flex flex-col gap-6">
                 
                 {/* Mobile Slider - Visible only on small screens, placed before PowerAnalysis */}
@@ -132,9 +131,6 @@ const App: React.FC = () => {
 
                 <div className="min-h-[400px]">
                     <PowerAnalysis outdoorTemp={outdoorTemp} />
-                </div>
-                <div className="min-h-[500px]">
-                    <AiAdvisor />
                 </div>
             </div>
         </div>
