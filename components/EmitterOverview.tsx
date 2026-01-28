@@ -6,7 +6,7 @@ import { Wind, Thermometer, Box, Gauge, Layers, LayoutTemplate } from 'lucide-re
 import { EmitterType } from '../types';
 
 export const EmitterOverview: React.FC = () => {
-  const roomTemp = 21;
+  const roomTemp = 20;
 
   // Split emitters by floor
   const plan3Emitters = MY_SYSTEM.emitters.filter(e => e.coordinates.floor === 3);

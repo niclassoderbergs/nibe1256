@@ -6,7 +6,7 @@
 export const calculateActualPower = (
   ratedPower: number,
   observedTemp: number,
-  roomTemp: number = 21,
+  roomTemp: number = 20,
   ratedDt: number = 50 
 ): number => {
   if (!ratedPower || !observedTemp) return 0;
@@ -23,7 +23,7 @@ export const calculateActualPower = (
 export const calculateFloorHeatingPower = (
     area: number,
     surfaceTemp: number,
-    roomTemp: number = 21
+    roomTemp: number = 20
 ): number => {
     if (!area || !surfaceTemp) return 0;
     const diff = surfaceTemp - roomTemp;
@@ -43,7 +43,7 @@ export const calculateEfficiencyPercent = (
 }
 
 export const calculateHousePowerDemand = (outdoorTemp: number): number => {
-  const indoorTemp = 21;
+  const indoorTemp = 20;
   const kFactor = 175; 
   const freeHeat = 800; 
   const deltaT = indoorTemp - outdoorTemp;
