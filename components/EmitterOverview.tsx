@@ -65,7 +65,14 @@ export const EmitterOverview: React.FC = () => {
                     <div className="text-2xl font-bold font-mono text-slate-900">
                         {actual} W
                     </div>
-                    <div className="text-[10px] text-slate-400 uppercase font-medium">Nuvarande Effekt</div>
+                    <div className="flex flex-col items-end">
+                        <span className="text-[10px] text-slate-400 uppercase font-medium">Nuvarande</span>
+                        {rated > 0 && (
+                            <span className="text-[10px] text-slate-500 font-bold whitespace-nowrap">
+                                (Max {rated} W)
+                            </span>
+                        )}
+                    </div>
                 </div>
             </div>
 
@@ -115,7 +122,7 @@ export const EmitterOverview: React.FC = () => {
           Status Värmekällor
         </h2>
         <div className="text-xs text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
-            Realtidsberäkning
+            Ögonblicksbild
         </div>
       </div>
 
