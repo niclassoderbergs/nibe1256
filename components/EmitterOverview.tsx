@@ -122,7 +122,7 @@ export const EmitterOverview: React.FC = () => {
           Status Värmekällor
         </h2>
         <div className="text-xs text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
-            Ögonblicksbild
+            Ögonblicksbild 2026-01-28 kl 23:00
         </div>
       </div>
 
