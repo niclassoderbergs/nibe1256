@@ -1,0 +1,78 @@
+
+import React from 'react';
+import { EmitterOverview } from './components/EmitterOverview';
+import { PowerAnalysis } from './components/PowerAnalysis';
+import { AiAdvisor } from './components/AiAdvisor';
+import { HeatDemandTable } from './components/HeatDemandTable';
+import { Thermometer, Wind, CloudSnow, MapPin, Menu, Home as HomeIcon } from 'lucide-react';
+import { MOCK_WEATHER } from './constants';
+
+const Header: React.FC = () => (
+  <header className="bg-white border-b border-slate-200 sticky top-0 z-50 h-16">
+    <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
+      <div className="flex items-center gap-3">
+        <div className="bg-slate-900 p-2 rounded-lg text-white">
+           <HomeIcon className="w-5 h-5" />
+        </div>
+        <div>
+           <h1 className="text-lg font-bold text-slate-900 leading-none">Timmerhus <span className="text-indigo-600">Åre</span></h1>
+           <p className="text-[10px] text-slate-500 font-medium tracking-wide uppercase mt-0.5">NIBE S1256 Dashboard</p>
+        </div>
+      </div>
+      
+      <div className="flex items-center gap-6">
+        <div className="hidden md:flex flex-col items-end mr-4">
+             <div className="flex items-center gap-2">
+                <CloudSnow className="w-4 h-4 text-sky-500" />
+                <span className="text-sm font-bold text-slate-800">{MOCK_WEATHER.temp}°C</span>
+             </div>
+             <div className="flex items-center gap-1.5 text-slate-400 text-xs">
+                <Wind className="w-3 h-3" />
+                <span>{MOCK_WEATHER.wind} m/s</span>
+             </div>
+        </div>
+        <div className="h-8 w-8 rounded-full bg-indigo-100 border border-indigo-200 flex items-center justify-center text-indigo-700 font-bold text-xs">
+            JD
+        </div>
+      </div>
+    </div>
+  </header>
+);
+
+const App: React.FC = () => {
+  return (
+    <div className="min-h-screen bg-slate-100/50 pb-12 font-sans text-slate-900">
+      <Header />
+
+      <main className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+        
+        {/* DASHBOARD GRID */}
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 h-[calc(100vh-120px)] min-h-[800px]">
+            
+            {/* COLUMN 1: Main Data Grid - Takes 8/12 width on large screens */}
+            <div className="xl:col-span-8 flex flex-col gap-6 h-full">
+                <div className="flex-1 min-h-[500px]">
+                    <EmitterOverview />
+                </div>
+                {/* House Specs / Heat Demand Table */}
+                <div className="h-[400px]">
+                    <HeatDemandTable />
+                </div>
+            </div>
+
+            {/* COLUMN 2: Sidebar Stats & AI - Takes 4/12 width */}
+            <div className="xl:col-span-4 flex flex-col gap-6 h-full">
+                <div className="h-[45%]">
+                    <PowerAnalysis />
+                </div>
+                <div className="h-[55%]">
+                    <AiAdvisor />
+                </div>
+            </div>
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default App;

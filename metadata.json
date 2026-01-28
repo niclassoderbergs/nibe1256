@@ -1,0 +1,5 @@
+{
+  "name": "NIBE S1256 Åre Dashboard",
+  "description": "En dashboard för övervakning och optimering av värmesystemet i timmerhuset i Åre. Fokuserar på NIBE S1256-13 och specifika husförutsättningar.",
+  "requestFramePermissions": []
+}
